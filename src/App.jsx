@@ -1,234 +1,222 @@
-import React, { useState } from 'react';
-import { Search, MapPin, Briefcase, DollarSign, Clock, ChevronRight, Menu, X, Bell, User } from 'lucide-react';
+import React from 'react';
+import { 
+  Search, 
+  MapPin, 
+  Briefcase, 
+  DollarSign, 
+  Clock, 
+  ChevronRight, 
+  Globe, 
+  Zap, 
+  BarChart3, 
+  Code2, 
+  Headset, 
+  Palette,
+  CheckCircle2,
+  Building2,
+  Users
+} from 'lucide-react';
 import './App.css';
 
-const MOCK_JOBS = [
-  {
-    id: 1,
-    title: "Senior Frontend Developer",
-    company: "TechNova Solutions",
-    location: "Bangalore, Karnataka",
-    salary: "₹18L - ₹25L a year",
-    type: "Full-time",
-    posted: "2 days ago",
-    description: "We are looking for a Senior Frontend Developer with 5+ years of experience in React and modern CSS. You will lead the UI development of our flagship product.",
-    requirements: [
-      "Expertise in React, Redux, and TypeScript",
-      "Strong understanding of CSS-in-JS and Responsive Design",
-      "Experience with testing frameworks like Jest/Cypress",
-      "Ability to mentor junior developers"
-    ],
-    benefits: ["Health Insurance", "WFH Options", "Performance Bonus"]
-  },
-  {
-    id: 2,
-    title: "Product Designer (UI/UX)",
-    company: "Creatix Studio",
-    location: "Mumbai, Maharashtra",
-    salary: "₹12L - ₹18L a year",
-    type: "Remote",
-    posted: "Just now",
-    description: "Join our creative team to build beautiful and functional user experiences. You should have a strong portfolio showcasing user-centric designs.",
-    requirements: [
-      "Proficiency in Figma and Adobe Suite",
-      "Understanding of Design Systems",
-      "Portfolio demonstrating web and mobile apps",
-      "Excellent communication skills"
-    ],
-    benefits: ["Flexible Hours", "Learning Stipend", "Stock Options"]
-  },
-  {
-    id: 3,
-    title: "Backend Engineer (Node.js)",
-    company: "DataFlow Systems",
-    location: "Hyderabad, Telangana",
-    salary: "₹15L - ₹22L a year",
-    type: "Full-time",
-    posted: "5 hours ago",
-    description: "Build scalable APIs and microservices for high-traffic applications. Experience with MongoDB and AWS is highly preferred.",
-    requirements: [
-      "Strong proficiency in Node.js and Express",
-      "Experience with NoSQL databases (MongoDB)",
-      "Understanding of RESTful APIs and GraphQL",
-      "Familiarity with AWS services"
-    ],
-    benefits: ["Relocation Bonus", "Modern Office", "Gym Membership"]
-  },
-  {
-    id: 4,
-    title: "Marketing Manager",
-    company: "GrowthEdge Inc.",
-    location: "Delhi, NCR",
-    salary: "₹10L - ₹15L a year",
-    type: "Hybrid",
-    posted: "1 day ago",
-    description: "Lead our digital marketing campaigns and drive user acquisition. You will be responsible for SEO, SEM, and Social Media strategies.",
-    requirements: [
-      "3+ years in Digital Marketing",
-      "Data-driven mindset",
-      "Experience with Google Ads and Meta Ads",
-      "Creative writing skills"
-    ],
-    benefits: ["Annual Trips", "Health Perks", "Workshops"]
-  }
-];
+const JobCard = ({ title, company, location, salary, type, time, logo }) => (
+  <div className="job-card">
+    <div className="job-header">
+      <div>
+        <h3 className="job-title">{title}</h3>
+        <p className="company-name">{company}</p>
+      </div>
+      <div className="company-logo">{logo}</div>
+    </div>
+    <div className="job-meta">
+      <div className="job-meta-item"><MapPin size={16} /> {location}</div>
+      <div className="job-meta-item"><Briefcase size={16} /> {type}</div>
+      <div className="job-meta-item"><DollarSign size={16} /> {salary}</div>
+      <div className="job-meta-item"><Clock size={16} /> {time}</div>
+    </div>
+    <div style={{ display: 'flex', gap: '0.75rem', marginTop: 'auto' }}>
+      <button className="btn btn-primary" style={{ flex: 1 }}>Apply Now</button>
+      <button className="btn btn-secondary">Save</button>
+    </div>
+  </div>
+);
+
+const CategoryCard = ({ icon: Icon, name, count }) => (
+  <div className="cat-card">
+    <div className="cat-icon"><Icon size={24} /></div>
+    <h3 className="cat-name">{name}</h3>
+    <p className="cat-count">{count} Open Positions</p>
+  </div>
+);
 
 function App() {
-  const [selectedJob, setSelectedJob] = useState(MOCK_JOBS[0]);
-  const [searchWhat, setSearchWhat] = useState('');
-  const [searchWhere, setSearchWhere] = useState('');
+  const featuredJobs = [
+    { title: 'Senior Frontend Engineer', company: 'Google', location: 'Bangalore, India', salary: '₹25L - ₹45L', type: 'Full-time', time: '2 hours ago', logo: 'G' },
+    { title: 'Product Designer', company: 'Razorpay', location: 'Remote', salary: '₹18L - ₹30L', type: 'Full-time', time: '5 hours ago', logo: 'R' },
+    { title: 'Backend Developer (Node.js)', company: 'Zomato', location: 'Gurgaon, India', salary: '₹20L - ₹40L', type: 'Full-time', time: '1 day ago', logo: 'Z' },
+    { title: 'Marketing Manager', company: 'Airtel', location: 'New Delhi', salary: '₹15L - ₹25L', type: 'Full-time', time: '3 days ago', logo: 'A' },
+    { title: 'Data Scientist', company: 'Flipkart', location: 'Bangalore, India', salary: '₹22L - ₹42L', type: 'Full-time', time: '4 days ago', logo: 'F' },
+    { title: 'Customer Success Lead', company: 'Freshworks', location: 'Chennai, India', salary: '₹12L - ₹20L', type: 'Full-time', time: '1 week ago', logo: 'F' },
+  ];
+
+  const categories = [
+    { icon: Code2, name: 'Development', count: '1,200+' },
+    { icon: Palette, name: 'Design', count: '450+' },
+    { icon: BarChart3, name: 'Marketing', count: '800+' },
+    { icon: Headset, name: 'Customer Support', count: '600+' },
+    { icon: Briefcase, name: 'Finance', count: '300+' },
+    { icon: Building2, name: 'Operations', count: '500+' },
+    { icon: Users, name: 'Human Resources', count: '200+' },
+    { icon: Globe, name: 'Sales', count: '900+' },
+  ];
 
   return (
     <div className="app">
       {/* Navbar */}
       <nav className="navbar">
-        <div className="container flex items-center justify-between h-full">
-          <div className="flex items-center gap-4">
-            <h1 style={{ color: 'var(--primary)', fontSize: '24px', fontWeight: '800' }}>JobCentre</h1>
-            <div className="nav-links flex gap-2" style={{ marginLeft: '32px' }}>
-              <a href="#">Find Jobs</a>
-              <a href="#">Company Reviews</a>
-              <a href="#">Salaries</a>
-            </div>
+        <div className="container nav-content">
+          <a href="/" className="logo">
+            <Zap size={32} fill="currentColor" />
+            <span>JobIndia</span>
+          </a>
+          <div className="nav-links">
+            <a href="#" className="nav-link">Find Jobs</a>
+            <a href="#" className="nav-link">Companies</a>
+            <a href="#" className="nav-link">Salaries</a>
+            <a href="#" className="nav-link">Post a Job</a>
           </div>
-          <div className="flex items-center gap-4">
-            <button className="btn-outline">Post a Job</button>
-            <div className="flex items-center gap-2" style={{ marginLeft: '12px' }}>
-              <Bell size={20} color="var(--text-muted)" />
-              <User size={24} color="var(--text-muted)" />
-            </div>
+          <div style={{ display: 'flex', gap: '1rem' }}>
+            <button className="btn">Sign In</button>
+            <button className="btn btn-primary">Sign Up</button>
           </div>
         </div>
       </nav>
 
-      {/* Hero Search Section */}
-      <section className="hero">
+      {/* Hero Section */}
+      <header className="hero">
         <div className="container">
-          <div className="search-container">
-            <div className="search-input-group">
-              <span style={{ color: 'var(--text-muted)', fontWeight: '700', marginRight: '8px' }}>What</span>
-              <Search size={18} color="var(--text-muted)" />
-              <input 
-                type="text" 
-                placeholder="Job title, keywords, or company" 
-                value={searchWhat}
-                onChange={(e) => setSearchWhat(e.target.value)}
-              />
-            </div>
-            <div className="search-input-group">
-              <span style={{ color: 'var(--text-muted)', fontWeight: '700', marginRight: '8px' }}>Where</span>
-              <MapPin size={18} color="var(--text-muted)" />
-              <input 
-                type="text" 
-                placeholder="City, state, or zip code" 
-                value={searchWhere}
-                onChange={(e) => setSearchWhere(e.target.value)}
-              />
-            </div>
-            <button className="btn-primary" style={{ margin: '4px', borderRadius: '4px' }}>Find Jobs</button>
-          </div>
-          <p style={{ textAlign: 'center', marginTop: '12px', fontSize: '14px', color: 'var(--text-muted)' }}>
-            <span style={{ fontWeight: '700', color: 'var(--primary)' }}>Post your resume</span> - It only takes a few seconds
+          <h1 className="hero-title">Find your dream job <br />in India's top companies</h1>
+          <p className="hero-subtitle">
+            Browse through thousands of high-paying jobs from startups to tech giants. 
+            Your next career move starts here.
           </p>
+          <div className="search-box">
+            <div className="search-input-group">
+              <Search size={20} color="#64748b" />
+              <input type="text" placeholder="Job title, keywords, or company" />
+            </div>
+            <div className="search-input-group">
+              <MapPin size={20} color="#64748b" />
+              <input type="text" placeholder="City or state" />
+            </div>
+            <button className="btn btn-primary" style={{ padding: '0.75rem 2.5rem', borderRadius: '0.75rem' }}>
+              Search Jobs
+            </button>
+          </div>
+          <div style={{ marginTop: '2rem', display: 'flex', justifyContent: 'center', gap: '2rem', color: '#94a3b8', fontSize: '0.875rem' }}>
+            <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}><CheckCircle2 size={16} color="#10b981" /> No hidden fees</span>
+            <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}><CheckCircle2 size={16} color="#10b981" /> Verified Employers</span>
+            <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}><CheckCircle2 size={16} color="#10b981" /> 10k+ New Jobs Weekly</span>
+          </div>
+        </div>
+      </header>
+
+      {/* Categories Section */}
+      <section className="section">
+        <div className="container">
+          <h2 className="section-title">Explore by Category</h2>
+          <div className="grid grid-4">
+            {categories.map((cat, index) => (
+              <CategoryCard key={index} {...cat} />
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Main Content */}
-      <main className="container">
-        <div className="job-feed">
-          {/* Job List */}
-          <div className="job-list">
-            <div className="flex items-center justify-between mb-4">
-              <h2 style={{ fontSize: '16px', fontWeight: '700' }}>Job Feed</h2>
-              <span style={{ fontSize: '14px', color: 'var(--text-muted)' }}>Sorted by relevance</span>
+      {/* Featured Jobs Section */}
+      <section className="section" style={{ backgroundColor: '#f1f5f9' }}>
+        <div className="container">
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '2.5rem' }}>
+            <div>
+              <h2 className="section-title" style={{ textAlign: 'left', marginBottom: '0.5rem' }}>Featured Jobs</h2>
+              <p style={{ color: 'var(--text-muted)' }}>Hand-picked opportunities from premium partners</p>
             </div>
-            
-            {MOCK_JOBS.map((job) => (
-              <div 
-                key={job.id} 
-                className={`job-card ${selectedJob.id === job.id ? 'active' : ''}`}
-                onClick={() => setSelectedJob(job)}
-              >
-                <h3 className="job-title">{job.title}</h3>
-                <div className="company-name">{job.company}</div>
-                <div className="location" style={{ fontSize: '14px', marginTop: '4px' }}>{job.location}</div>
-                <div className="job-meta">
-                  <span className="salary">{job.salary}</span>
-                  <span className="flex items-center gap-2"><Briefcase size={14} /> {job.type}</span>
-                </div>
-                <div style={{ marginTop: '12px', fontSize: '14px', color: 'var(--text-muted)' }}>
-                  {job.description.substring(0, 100)}...
-                </div>
-                <div className="flex items-center justify-between mt-4">
-                  <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>Posted {job.posted}</span>
-                  <ChevronRight size={16} color="var(--text-muted)" />
-                </div>
-              </div>
+            <a href="#" style={{ color: 'var(--primary)', fontWeight: 600, display: 'flex', alignItems: 'center' }}>
+              View all jobs <ChevronRight size={20} />
+            </a>
+          </div>
+          <div className="grid grid-3">
+            {featuredJobs.map((job, index) => (
+              <JobCard key={index} {...job} />
             ))}
           </div>
+        </div>
+      </section>
 
-          {/* Job Details Sidebar */}
-          <div className="job-details">
-            <div className="details-header">
-              <h2 style={{ fontSize: '24px', fontWeight: '700', marginBottom: '8px' }}>{selectedJob.title}</h2>
-              <div style={{ color: 'var(--primary)', fontWeight: '600', marginBottom: '4px' }}>{selectedJob.company}</div>
-              <div style={{ color: 'var(--text-main)', marginBottom: '16px' }}>{selectedJob.location}</div>
-              
-              <div className="flex gap-4 mb-4">
-                <button className="btn-primary apply-btn">Apply Now</button>
-                <button className="btn-outline" style={{ border: '1px solid var(--border)', color: 'var(--text-main)' }}>Save Job</button>
-              </div>
-              
-              <div className="flex items-center gap-4" style={{ fontSize: '14px', color: 'var(--text-muted)' }}>
-                <span className="flex items-center gap-1"><DollarSign size={16} /> {selectedJob.salary}</span>
-                <span className="flex items-center gap-1"><Clock size={16} /> {selectedJob.posted}</span>
-              </div>
-            </div>
-
-            <div className="job-desc-content">
-              <h3 className="section-title">Job Details</h3>
-              <p>{selectedJob.description}</p>
-              
-              <h3 className="section-title" style={{ marginTop: '24px' }}>Full Job Description</h3>
-              <p>We are seeking a talented and motivated <strong>{selectedJob.title}</strong> to join our growing team. As a key member of our engineering department, you will play a vital role in shaping the future of our technology stack.</p>
-              
-              <h3 className="section-title" style={{ marginTop: '24px' }}>Requirements</h3>
-              <ul>
-                {selectedJob.requirements.map((req, i) => (
-                  <li key={i} style={{ marginBottom: '8px' }}>{req}</li>
-                ))}
-              </ul>
-
-              <h3 className="section-title" style={{ marginTop: '24px' }}>Benefits</h3>
-              <ul>
-                {selectedJob.benefits.map((benefit, i) => (
-                  <li key={i} style={{ marginBottom: '8px' }}>{benefit}</li>
-                ))}
-              </ul>
-
-              <div style={{ marginTop: '32px', borderTop: '1px solid var(--border)', paddingTop: '24px' }}>
-                <p style={{ fontSize: '14px', color: 'var(--text-muted)' }}>
-                  Hiring Lab | Career Advice | Browse Jobs | Salaries | Indeed Events | Work at Indeed | Countries | About | Help Center
-                </p>
-                <p style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '8px' }}>
-                  © 2026 JobCentre - Cookies, Privacy and Terms
-                </p>
-              </div>
-            </div>
+      {/* CTA Section */}
+      <section className="section">
+        <div className="container" style={{ 
+          background: 'var(--primary)', 
+          borderRadius: '2rem', 
+          padding: '4rem', 
+          color: 'white',
+          textAlign: 'center'
+        }}>
+          <h2 style={{ fontSize: '2.5rem', marginBottom: '1.5rem' }}>Ready to take the next step?</h2>
+          <p style={{ fontSize: '1.25rem', marginBottom: '2.5rem', opacity: 0.9 }}>
+            Join 2 million+ job seekers and get matched with your ideal role today.
+          </p>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '1.5rem' }}>
+            <button className="btn" style={{ backgroundColor: 'white', color: 'var(--primary)', padding: '1rem 2.5rem' }}>
+              Create Profile
+            </button>
+            <button className="btn" style={{ border: '1px solid white', color: 'white', padding: '1rem 2.5rem' }}>
+              Upload Resume
+            </button>
           </div>
         </div>
-      </main>
+      </section>
 
-      {/* Footer (Simplified for Professional Look) */}
-      <footer style={{ marginTop: '64px', borderTop: '1px solid var(--border)', padding: '32px 0', background: 'white' }}>
-        <div className="container flex justify-between items-center">
-          <div style={{ color: 'var(--text-muted)', fontSize: '14px' }}>
-            © 2026 JobCentre. All rights reserved.
+      {/* Footer */}
+      <footer className="footer">
+        <div className="container">
+          <div className="footer-grid">
+            <div>
+              <a href="/" className="footer-logo">JobIndia</a>
+              <p style={{ lineHeight: 1.8 }}>
+                The leading job portal in India connecting talent with opportunity. 
+                Built for job seekers who value speed, simplicity, and quality.
+              </p>
+            </div>
+            <div>
+              <h4 className="footer-title">For Candidates</h4>
+              <ul className="footer-links">
+                <li><a href="#" className="footer-link">Browse Jobs</a></li>
+                <li><a href="#" className="footer-link">Job Alerts</a></li>
+                <li><a href="#" className="footer-link">Career Advice</a></li>
+                <li><a href="#" className="footer-link">Resume Builder</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="footer-title">For Employers</h4>
+              <ul className="footer-links">
+                <li><a href="#" className="footer-link">Post a Job</a></li>
+                <li><a href="#" className="footer-link">Search Candidates</a></li>
+                <li><a href="#" className="footer-link">Hiring Solutions</a></li>
+                <li><a href="#" className="footer-link">Pricing Plans</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="footer-title">Support</h4>
+              <ul className="footer-links">
+                <li><a href="#" className="footer-link">Help Center</a></li>
+                <li><a href="#" className="footer-link">Contact Us</a></li>
+                <li><a href="#" className="footer-link">Privacy Policy</a></li>
+                <li><a href="#" className="footer-link">Terms of Service</a></li>
+              </ul>
+            </div>
           </div>
-          <div className="flex gap-4" style={{ fontSize: '14px' }}>
-            <a href="#" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>Privacy Policy</a>
-            <a href="#" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>Terms of Service</a>
-            <a href="#" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>Contact Us</a>
+          <div className="footer-bottom">
+            <p>&copy; {new Date().getFullYear()} JobIndia Portal. All rights reserved.</p>
           </div>
         </div>
       </footer>
