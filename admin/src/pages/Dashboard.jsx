@@ -1,105 +1,133 @@
 import React, { useState, useEffect } from 'react';
-import { Users, Briefcase, FileText, TrendingUp } from 'lucide-react';
-import './Dashboard.css';
+import { Link } from 'react-router-dom';
+import { Users, Briefcase, FileText, TrendingUp, ArrowRight, Clock } from 'lucide-react';
 
-const StatCard = ({ title, value, icon: Icon, trend, trendUp }) => (
-  <div className="stat-card card">
-    <div className="stat-card-header">
-      <div>
-        <h3>{title}</h3>
-        <p className="stat-value">{value}</p>
-      </div>
-      <div className={`stat-icon-wrapper ${trendUp ? 'positive' : 'negative'}`}>
-        <Icon size={24} />
+const API = 'https://back.jobscenterindia.com/api/admin';
+
+const StatCard = ({ title, value, icon: Icon, color, loading }) => (
+  <div className={`card stat-card ${color}`}>
+    <div className="stat-top">
+      <div className={`stat-icon ${color}`}>
+        <Icon size={22} />
       </div>
     </div>
-    <div className="stat-footer">
-      <span className={`trend ${trendUp ? 'text-green' : 'text-red'}`}>
-        {trendUp ? '↑' : '↓'} {trend}
-      </span>
-      <span className="text-muted">vs last month</span>
-    </div>
+    <div className="stat-value">{loading ? '—' : (value ?? 0).toLocaleString()}</div>
+    <div className="stat-label">{title}</div>
   </div>
 );
 
 const Dashboard = () => {
   const [stats, setStats] = useState(null);
+  const [recent, setRecent] = useState({ users: [], jobs: [] });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchStats = async () => {
+    (async () => {
       try {
-        const response = await fetch('https://back.jobscenterindia.com/api/admin/stats');
-        const data = await response.json();
+        const res = await fetch(`${API}/stats`);
+        const data = await res.json();
         if (data.success) {
           setStats(data.stats);
+          setRecent(data.recentActivity || { users: [], jobs: [] });
         } else {
           setError('Failed to fetch stats');
         }
-      } catch (err) {
-        setError('Error connecting to server');
-        console.error(err);
+      } catch {
+        setError('Cannot reach server');
       } finally {
         setLoading(false);
       }
-    };
-
-    fetchStats();
+    })();
   }, []);
 
-  if (loading) {
-    return <div className="dashboard"><div className="page-header"><h1>Loading Dashboard...</h1></div></div>;
-  }
-
-  if (error) {
-    return <div className="dashboard"><div className="page-header"><h1 className="text-red">{error}</h1></div></div>;
-  }
+  const timeAgo = (dateStr) => {
+    const diff = Date.now() - new Date(dateStr);
+    const mins = Math.floor(diff / 60000);
+    if (mins < 60) return `${mins}m ago`;
+    const hrs = Math.floor(mins / 60);
+    if (hrs < 24) return `${hrs}h ago`;
+    return `${Math.floor(hrs / 24)}d ago`;
+  };
 
   return (
-    <div className="dashboard">
-      <div className="page-header">
-        <h1>Dashboard Overview</h1>
-        <button className="btn btn-primary">Generate Report</button>
-      </div>
-      
+    <div>
+      {error && (
+        <div style={{
+          background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.3)',
+          borderRadius: 12, padding: '14px 18px', marginBottom: 24,
+          color: '#ef4444', fontSize: 13.5, display: 'flex', alignItems: 'center', gap: 8
+        }}>
+          ⚠️ {error}
+        </div>
+      )}
+
+      {/* Stat Grid */}
       <div className="stats-grid">
-        <StatCard 
-          title="Total Users" 
-          value={stats?.totalUsers || 0} 
-          icon={Users} 
-          trend="12.5%" 
-          trendUp={true} 
-        />
-        <StatCard 
-          title="Total Jobs" 
-          value={stats?.totalJobs || 0} 
-          icon={Briefcase} 
-          trend="5.2%" 
-          trendUp={true} 
-        />
-        <StatCard 
-          title="Active Jobs" 
-          value={stats?.activeJobs || 0} 
-          icon={TrendingUp} 
-          trend="2.4%" 
-          trendUp={true} 
-        />
-        <StatCard 
-          title="Total Applications" 
-          value={stats?.totalApplications || 0} 
-          icon={FileText} 
-          trend="8.1%" 
-          trendUp={true} 
-        />
+        <StatCard title="Total Users"        value={stats?.totalUsers}        icon={Users}     color="purple" loading={loading} />
+        <StatCard title="Total Jobs"         value={stats?.totalJobs}         icon={Briefcase} color="blue"   loading={loading} />
+        <StatCard title="Active Jobs"        value={stats?.activeJobs}        icon={TrendingUp} color="green" loading={loading} />
+        <StatCard title="Total Applications" value={stats?.totalApplications} icon={FileText}  color="amber"  loading={loading} />
       </div>
 
-      <div className="dashboard-content">
-        <div className="card recent-activity">
-          <h2>Recent Activity</h2>
-          <div className="activity-list">
-            <p className="empty-state">No recent activity to show.</p>
+      {/* Recent Activity */}
+      <div className="dashboard-grid">
+        {/* Recent Users */}
+        <div className="card">
+          <div className="recent-card-header">
+            <h3>Recent Users</h3>
+            <Link to="/users" className="btn btn-ghost btn-sm" style={{ textDecoration: 'none' }}>
+              View All <ArrowRight size={14} />
+            </Link>
           </div>
+          {loading ? (
+            <div className="loading-state"><div className="spinner" /></div>
+          ) : recent.users.length === 0 ? (
+            <div className="empty-state"><p>No users yet</p></div>
+          ) : recent.users.map(u => (
+            <div key={u._id} className="recent-row">
+              <div className="user-avatar">{u.name?.charAt(0).toUpperCase()}</div>
+              <div className="recent-row-info">
+                <div className="name">{u.name}</div>
+                <div className="sub">{u.email}</div>
+              </div>
+              <span className={`badge ${u.role === 'employer' ? 'badge-blue' : u.role === 'admin' ? 'badge-purple' : 'badge-gray'}`}>
+                {u.role}
+              </span>
+              <span className="recent-row-time">
+                <Clock size={11} style={{ marginRight: 3, verticalAlign: 'middle' }} />
+                {timeAgo(u.createdAt)}
+              </span>
+            </div>
+          ))}
+        </div>
+
+        {/* Recent Jobs */}
+        <div className="card">
+          <div className="recent-card-header">
+            <h3>Recent Jobs</h3>
+            <Link to="/jobs" className="btn btn-ghost btn-sm" style={{ textDecoration: 'none' }}>
+              View All <ArrowRight size={14} />
+            </Link>
+          </div>
+          {loading ? (
+            <div className="loading-state"><div className="spinner" /></div>
+          ) : recent.jobs.length === 0 ? (
+            <div className="empty-state"><p>No jobs yet</p></div>
+          ) : recent.jobs.map(j => (
+            <div key={j._id} className="recent-row">
+              <div className="stat-icon blue" style={{ width: 34, height: 34, borderRadius: 8 }}>
+                <Briefcase size={16} />
+              </div>
+              <div className="recent-row-info">
+                <div className="name">{j.title}</div>
+                <div className="sub">{j.company}</div>
+              </div>
+              <span className={`badge ${j.status === 'active' ? 'badge-green' : 'badge-gray'}`}>
+                {j.status || 'active'}
+              </span>
+            </div>
+          ))}
         </div>
       </div>
     </div>

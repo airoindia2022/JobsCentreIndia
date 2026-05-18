@@ -26,7 +26,11 @@ import {
   Link2,
   Phone,
   Calendar,
-  MessageSquare
+  MessageSquare,
+  GraduationCap,
+  Scale,
+  Heart,
+  Newspaper
 } from 'lucide-react';
 import './App.css';
 import { AuthProvider, AuthContext } from './context/AuthContext';
@@ -393,6 +397,54 @@ const Home = () => {
                 <li><Link to="#" className="footer-link">Search Candidates</Link></li>
                 <li><Link to="#" className="footer-link">Hiring Solutions</Link></li>
                 <li><Link to="#" className="footer-link">Pricing Plans</Link></li>
+              </ul>
+            </div>
+            {/* Our Ecosystem */}
+            <div className="footer-ecosystem">
+              <h4 className="footer-title">Our Ecosystem</h4>
+              <ul className="footer-ecosystem-list">
+                <li>
+                  <a href="https://airoindia.net" target="_blank" rel="noopener noreferrer" className="footer-ecosystem-link">
+                    <span className="footer-eco-icon"><GraduationCap size={16} /></span>
+                    <span>Academics</span>
+                    <span className="footer-eco-arrow">↗</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://www.integritylegalcentre.in/" target="_blank" rel="noopener noreferrer" className="footer-ecosystem-link">
+                    <span className="footer-eco-icon"><Scale size={16} /></span>
+                    <span>Legal</span>
+                    <span className="footer-eco-arrow">↗</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://shubhvivah.org.in/" target="_blank" rel="noopener noreferrer" className="footer-ecosystem-link">
+                    <span className="footer-eco-icon"><Heart size={16} /></span>
+                    <span>Matrimony</span>
+                    <span className="footer-eco-arrow">↗</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://bazaarindia.org/" target="_blank" rel="noopener noreferrer" className="footer-ecosystem-link">
+                    <span className="footer-eco-icon"><Briefcase size={16} /></span>
+                    <span>Business</span>
+                    <span className="footer-eco-arrow">↗</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://www.navnirmanwelfaresociety.in/" target="_blank" rel="noopener noreferrer" className="footer-ecosystem-link">
+                    <span className="footer-eco-icon"><Globe size={16} /></span>
+                    <span>NGO</span>
+                    <span className="footer-eco-arrow">↗</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://www.hindustanradiance.co.in/" target="_blank" rel="noopener noreferrer" className="footer-ecosystem-link">
+                    <span className="footer-eco-icon"><Newspaper size={16} /></span>
+                    <span>News</span>
+                    <span className="footer-eco-arrow">↗</span>
+                  </a>
+                </li>
               </ul>
             </div>
           </div>
