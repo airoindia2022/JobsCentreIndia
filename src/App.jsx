@@ -5,7 +5,7 @@ import {
   Search, 
   MapPin, 
   Briefcase, 
-  DollarSign, 
+  IndianRupee, 
   Clock, 
   ChevronRight, 
   Globe, 
@@ -56,13 +56,6 @@ const Github = ({ size = 20 }) => (
   </svg>
 );
 
-const CategoryCard = ({ icon: Icon, name, count }) => (
-  <div className="cat-card">
-    <div className="cat-icon"><Icon size={24} /></div>
-    <h3 className="cat-name">{name}</h3>
-    <p className="cat-count">{count} Open Positions</p>
-  </div>
-);
 
 const Home = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -95,16 +88,6 @@ const Home = () => {
     { _id: 'mock6', title: 'Customer Success Lead', company: 'Freshworks', location: 'Chennai, India', salary: '₹12L - ₹20L', type: 'Full-time', time: '1 week ago', description: 'Freshworks is hiring a Customer Success Lead to manage client relationships.', requirements: ['Communication', 'Support'] }
   ];
 
-  const categories = [
-    { icon: Code2, name: 'Development', count: '1,200+' },
-    { icon: Palette, name: 'Design', count: '450+' },
-    { icon: BarChart3, name: 'Marketing', count: '800+' },
-    { icon: Headset, name: 'Customer Support', count: '600+' },
-    { icon: Briefcase, name: 'Finance', count: '300+' },
-    { icon: Building2, name: 'Operations', count: '500+' },
-    { icon: Users, name: 'Human Resources', count: '200+' },
-    { icon: Globe, name: 'Sales', count: '900+' },
-  ];
 
   const fetchJobs = async () => {
     try {
@@ -216,17 +199,6 @@ const Home = () => {
             </div>
           </header>
 
-          {/* Categories Section */}
-          <section className="section">
-            <div className="container">
-              <h2 className="section-title">Explore by Category</h2>
-              <div className="grid grid-4">
-                {categories.map((cat, index) => (
-                  <CategoryCard key={index} {...cat} />
-                ))}
-              </div>
-            </div>
-          </section>
 
           {/* Dynamic Jobs Listing Section */}
           <section id="jobs-section" className="section" style={{ backgroundColor: '#f1f5f9' }}>
@@ -281,7 +253,7 @@ const Home = () => {
                       <div className="job-meta" style={{ margin: '1rem 0' }}>
                         <div className="job-meta-item"><MapPin size={16} /> {job.location}</div>
                         <div className="job-meta-item"><Briefcase size={16} /> {job.type}</div>
-                        <div className="job-meta-item"><DollarSign size={16} /> {job.salary}</div>
+                        <div className="job-meta-item"><IndianRupee size={16} /> {job.salary}</div>
                       </div>
                       {job.description && (
                         <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: '1.6', margin: '0 0 1.5rem', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>

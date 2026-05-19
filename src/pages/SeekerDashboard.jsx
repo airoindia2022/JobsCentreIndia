@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
-import { Search, MapPin, Briefcase, DollarSign, Clock, LayoutDashboard, LogOut, User, X, FileText, Send, Link2, Globe, Phone, Calendar, MessageSquare, CheckCircle } from 'lucide-react';
+import { Search, MapPin, Briefcase, IndianRupee, Clock, LayoutDashboard, LogOut, User, X, FileText, Send, Link2, Globe, Phone, Calendar, MessageSquare, CheckCircle } from 'lucide-react';
 
 const Github = ({ size = 20 }) => (
   <svg 
@@ -199,7 +199,7 @@ const SeekerDashboard = () => {
                       <div className="data-item-meta">
                         <span><MapPin size={14} /> {job.location}</span>
                         <span><Briefcase size={14} /> {job.type}</span>
-                        <span><DollarSign size={14} /> {job.salary}</span>
+                        <span><IndianRupee size={14} /> {job.salary}</span>
                       </div>
                     </div>
                     <div className="data-item-actions">

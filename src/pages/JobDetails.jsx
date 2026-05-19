@@ -5,7 +5,7 @@ import { AuthContext } from '../context/AuthContext';
 import { 
   MapPin, 
   Briefcase, 
-  DollarSign, 
+  IndianRupee, 
   CheckCircle2, 
   Clock, 
   Zap, 
@@ -638,7 +638,7 @@ const JobDetails = () => {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', marginBottom: '2.25rem' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '40px', height: '40px', background: '#f8fafc', border: '1px solid var(--border)', borderRadius: '0.75rem', color: 'var(--primary)' }}>
-                      <DollarSign size={20} />
+                      <IndianRupee size={20} />
                     </div>
                     <div>
                       <span style={{ display: 'block', fontSize: '0.725rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 700 }}>Remuneration Plan</span>

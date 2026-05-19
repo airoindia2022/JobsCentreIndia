@@ -16,7 +16,7 @@ import {
   Edit, 
   Eye, 
   MapPin, 
-  DollarSign, 
+  IndianRupee, 
   FileText,
   MessageSquare,
   Link2,
@@ -843,7 +843,7 @@ const ProviderDashboard = () => {
                   <div className="listing-meta-row">
                     <span className="meta-text"><MapPin size={13} /> {job.location}</span>
                     <span className={`pill-badge ${job.type.toLowerCase().replace(' ', '-')}`}>{job.type}</span>
-                    <span className="meta-text"><DollarSign size={13} /> {job.salary}</span>
+                    <span className="meta-text"><IndianRupee size={13} /> {job.salary}</span>
                     <span className="meta-text"><Calendar size={13} /> Posted: {new Date(job.createdAt).toLocaleDateString()}</span>
                   </div>
                 </div>
@@ -3213,7 +3213,7 @@ const ProviderDashboard = () => {
                         <div className="form-group-premium">
                           <label>Annual Compensations (Salary Range)</label>
                           <div className="input-icon-container">
-                            <DollarSign size={16} />
+                            <IndianRupee size={16} />
                             <input 
                               type="text" 
                               value={formData.salary} 
@@ -3396,7 +3396,7 @@ const ProviderDashboard = () => {
                         <div className="form-group-premium">
                           <label>Annual Compensations (Salary Range)</label>
                           <div className="input-icon-container">
-                            <DollarSign size={16} />
+                            <IndianRupee size={16} />
                             <input 
                               type="text" 
                               value={formData.salary} 

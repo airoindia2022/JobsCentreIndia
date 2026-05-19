@@ -3,20 +3,6 @@ import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { Zap, Mail, Lock, ArrowRight } from 'lucide-react';
 
-const GithubIcon = ({ size = 20 }) => (
-  <svg 
-    width={size} 
-    height={size} 
-    viewBox="0 0 24 24" 
-    fill="none" 
-    stroke="currentColor" 
-    strokeWidth="2" 
-    strokeLinecap="round" 
-    strokeLinejoin="round"
-  >
-    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
-  </svg>
-);
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -120,17 +106,6 @@ const Login = () => {
                 {!isLoading && <ArrowRight size={18} />}
               </button>
             </form>
-
-            <div className="auth-divider">
-              <span>Or continue with</span>
-            </div>
-
-            <div className="social-auth">
-              <button className="btn btn-secondary btn-block">
-                <GithubIcon size={20} />
-                GitHub
-              </button>
-            </div>
 
             <p className="auth-footer">
               New to Job Center India? <Link to="/register">Create an account</Link>
@@ -240,29 +215,6 @@ const Login = () => {
           font-size: 0.875rem;
           color: var(--primary-light);
           font-weight: 500;
-        }
-
-        .auth-divider {
-          display: flex;
-          align-items: center;
-          margin: 2rem 0;
-          color: #475569;
-          font-size: 0.875rem;
-        }
-
-        .auth-divider::before, .auth-divider::after {
-          content: '';
-          flex: 1;
-          height: 1px;
-          background: var(--glass-border);
-        }
-
-        .auth-divider span {
-          padding: 0 1rem;
-        }
-
-        .social-auth {
-          margin-bottom: 2rem;
         }
 
         .error-message {

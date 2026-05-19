@@ -53,10 +53,9 @@ const Navbar = () => {
         </Link>
         
         <div className={`nav-links ${isMenuOpen ? 'active' : ''}`}>
-          <a href="#" className="nav-link" onClick={handleJobsClick}>Find Jobs</a>
-          
           {user && user.role === 'seeker' && (
             <>
+              <a href="#" className="nav-link" onClick={handleJobsClick}>Find Jobs</a>
               <button 
                 onClick={handleApplicationsClick} 
                 className="nav-link" 
@@ -72,8 +71,7 @@ const Navbar = () => {
             <Link to="/provider-dashboard" className="nav-link" onClick={() => setIsMenuOpen(false)}>Employer Dashboard</Link>
           )}
 
-          <Link to="#" className="nav-link" onClick={() => setIsMenuOpen(false)}>Companies</Link>
-          <Link to="#" className="nav-link" onClick={() => setIsMenuOpen(false)}>Salaries</Link>
+
 
           {user ? (
             <div className="mobile-auth-btns">
